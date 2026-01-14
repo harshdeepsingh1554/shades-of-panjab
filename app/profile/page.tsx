@@ -2,9 +2,8 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { useRouter } from "next/navigation";
-import { Package, Clock, CheckCircle, Truck, Gift, MessageSquare, LogOut, Loader2, Camera, Upload, IndianRupee, Trash2, ShoppingCart, MapPin, Phone, User, ExternalLink } from "lucide-react";
+import { Package, Clock, CheckCircle, Truck, Gift, MessageSquare, LogOut, Loader2, Camera, IndianRupee, Trash2, ShoppingCart, MapPin, Phone, User, ExternalLink } from "lucide-react";
 import { useCart } from "@/context/CartContext";
-import Link from "next/link";
 
 // Types
 type Order = {
@@ -175,22 +174,47 @@ export default function ProfilePage() {
   };
 
   if (loading) return (
-    <div className="min-h-screen bg-[#0f0505] flex items-center justify-center text-[#c5a059]">
+    <div className="min-h-screen bg-[#0b0b0c] flex items-center justify-center text-[#c5a059]">
       <Loader2 className="animate-spin w-10 h-10" />
     </div>
   );
 
   return (
-    <div className="min-h-screen bg-[#0f0505] pb-20">
-      <div className="max-w-5xl mx-auto px-4 py-8">
+    <div className="min-h-screen bg-[#0b0b0c] text-[#f8f2e7] pb-20 relative overflow-hidden">
+      <div className="pointer-events-none absolute -top-28 right-[-140px] h-72 w-72 rounded-full bg-[#c5a059]/20 blur-3xl" />
+      <div className="pointer-events-none absolute -bottom-32 left-[-120px] h-96 w-96 rounded-full bg-[#3a2715]/40 blur-3xl" />
+      <div className="max-w-6xl mx-auto px-4 py-10 relative">
         
         {/* Profile Header */}
-        <div className="flex flex-col md:flex-row justify-between items-center mb-12 bg-[#1a1510] p-6 rounded-xl border border-[#c5a059]/20 shadow-lg gap-4">
-          <div className="text-center md:text-left">
-            <p className="text-[#c5a059]/60 uppercase tracking-[0.2em] text-xs font-bold mb-1">Authenticated Member</p>
-            <h1 className="text-xl md:text-2xl font-heading font-bold text-[#fbf5e9]">{userEmail}</h1>
+        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 mb-12">
+          <div className="flex-1 w-full bg-[#141210]/80 p-6 rounded-2xl border border-[#c5a059]/20 shadow-[0_20px_60px_-30px_rgba(0,0,0,0.7)] backdrop-blur">
+            <div className="flex flex-col md:flex-row md:items-center gap-5">
+              <div className="h-14 w-14 rounded-full bg-[#c5a059]/15 border border-[#c5a059]/40 flex items-center justify-center text-[#c5a059] font-bold text-lg">
+                {userEmail ? userEmail.charAt(0).toUpperCase() : "U"}
+              </div>
+              <div className="flex-1">
+                <p className="text-[#c5a059]/70 uppercase tracking-[0.2em] text-[10px] font-bold mb-1 flex items-center gap-2">
+                  <User size={12} /> Signed in
+                </p>
+                <h1 className="text-xl md:text-2xl font-heading font-bold text-[#fbf5e9] break-all">{userEmail}</h1>
+              </div>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 w-full md:w-auto">
+                <div className="bg-black/40 border border-white/5 rounded-xl px-4 py-3">
+                  <p className="text-[10px] uppercase tracking-widest text-[#c5a059]/70">Orders</p>
+                  <p className="text-lg font-bold text-[#fbf5e9]">{orders.length}</p>
+                </div>
+                <div className="bg-black/40 border border-white/5 rounded-xl px-4 py-3">
+                  <p className="text-[10px] uppercase tracking-widest text-[#c5a059]/70">Requests</p>
+                  <p className="text-lg font-bold text-[#fbf5e9]">{customRequests.length}</p>
+                </div>
+                <div className="hidden sm:block bg-black/40 border border-white/5 rounded-xl px-4 py-3">
+                  <p className="text-[10px] uppercase tracking-widest text-[#c5a059]/70">Status</p>
+                  <p className="text-lg font-bold text-green-400">Active</p>
+                </div>
+              </div>
+            </div>
           </div>
-          <button onClick={handleLogout} className="flex items-center gap-2 text-red-400 border border-red-500/30 px-6 py-2.5 hover:bg-red-900/20 rounded-lg text-xs uppercase tracking-widest font-bold transition">
+          <button onClick={handleLogout} className="flex items-center gap-2 text-red-300 border border-red-500/30 px-6 py-2.5 hover:bg-red-900/20 rounded-xl text-xs uppercase tracking-widest font-bold transition">
             <LogOut size={14} /> Sign Out
           </button>
         </div>
@@ -198,18 +222,21 @@ export default function ProfilePage() {
         {/* --- SECTION 1: CUSTOM REQUESTS --- */}
         {customRequests.length > 0 && (
           <div className="mb-12">
-            <div className="flex items-center gap-3 border-b border-[#c5a059]/20 pb-3 mb-6">
-              <Camera className="text-[#c5a059]" />
-              <h2 className="text-xl font-heading text-white">Bespoke Requests</h2>
+            <div className="flex items-center justify-between gap-4 border-b border-white/10 pb-3 mb-6">
+              <div className="flex items-center gap-3">
+                <Camera className="text-[#c5a059]" />
+                <h2 className="text-xl font-heading text-white">Bespoke Requests</h2>
+              </div>
+              <span className="text-[10px] uppercase tracking-widest text-[#c5a059]/70">{customRequests.length} active</span>
             </div>
 
-            <div className="space-y-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {customRequests.map((req) => {
                 const statusStyle = getStatusStyle(req.status);
                 return (
-                  <div key={req.id} className="bg-[#1a1510] border border-[#c5a059]/30 rounded-xl overflow-hidden shadow-lg p-5 flex flex-col sm:flex-row gap-5">
+                  <div key={req.id} className="bg-[#15130f] border border-[#c5a059]/20 rounded-2xl overflow-hidden shadow-[0_24px_60px_-40px_rgba(0,0,0,0.8)] p-5 flex flex-col gap-5">
                     {/* Image */}
-                    <div className="w-full sm:w-32 aspect-square bg-black rounded-lg border border-[#c5a059]/20 overflow-hidden shrink-0">
+                    <div className="w-full aspect-[16/9] sm:aspect-square bg-black rounded-xl border border-[#c5a059]/15 overflow-hidden">
                       <img src={req.reference_image_url} className="w-full h-full object-cover opacity-80" alt="Request" />
                     </div>
 
@@ -226,27 +253,27 @@ export default function ProfilePage() {
                       </div>
 
                       {/* Action Area */}
-                      <div className="bg-black/30 p-4 rounded border border-[#c5a059]/10">
+                      <div className="bg-black/30 p-4 rounded-xl border border-white/5">
                         {req.admin_price_quote ? (
                           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                             <div>
-                              <p className="text-[10px] text-[#c5a059] uppercase tracking-widest">Royal Quote</p>
-                              <p className="text-2xl font-bold text-green-400 flex items-center">
-                                <IndianRupee size={20} />{req.admin_price_quote}
+                              <p className="text-[10px] text-[#c5a059] uppercase tracking-widest">Quote</p>
+                              <p className="text-2xl font-bold text-green-400 flex items-center gap-1">
+                                <IndianRupee size={18} />{req.admin_price_quote}
                               </p>
                             </div>
 
                             <div className="flex items-center gap-3">
                                <button 
                                  onClick={() => handleAddToCart(req)}
-                                 className="bg-[#c5a059] text-[#1a1510] font-bold px-6 py-2.5 rounded shadow-lg hover:bg-white transition-all flex items-center gap-2 uppercase text-xs tracking-wider border border-[#c5a059]"
+                                 className="bg-[#c5a059] text-[#1a1510] font-bold px-6 py-2.5 rounded-lg shadow-lg hover:bg-white transition-all flex items-center gap-2 uppercase text-xs tracking-wider border border-[#c5a059]"
                                >
                                  <ShoppingCart size={16} /> Add to Cart
                                </button>
                                
                                <button 
                                  onClick={() => handleDeleteRequest(req.id)}
-                                 className="text-red-400 hover:text-red-300 border border-red-500/30 p-2.5 rounded hover:bg-red-900/20 transition"
+                                 className="text-red-400 hover:text-red-300 border border-red-500/30 p-2.5 rounded-lg hover:bg-red-900/20 transition"
                                  title="Decline Quote & Delete"
                                >
                                  <Trash2 size={18} />
@@ -254,7 +281,7 @@ export default function ProfilePage() {
                             </div>
                           </div>
                         ) : (
-                          <p className="text-yellow-500 text-sm italic">Waiting for price quote from the Royal Court...</p>
+                          <p className="text-yellow-500 text-sm italic">Waiting for a price quote.</p>
                         )}
                       </div>
                     </div>
@@ -266,14 +293,17 @@ export default function ProfilePage() {
         )}
 
         {/* --- SECTION 2: ORDER HISTORY --- */}
-        <div className="flex items-center gap-3 border-b border-[#c5a059]/20 pb-3 mb-6">
-          <Package className="text-[#c5a059]" />
-          <h2 className="text-xl font-heading text-white">Order History</h2>
+        <div className="flex items-center justify-between gap-4 border-b border-white/10 pb-3 mb-6">
+          <div className="flex items-center gap-3">
+            <Package className="text-[#c5a059]" />
+            <h2 className="text-xl font-heading text-white">Order History</h2>
+          </div>
+          <span className="text-[10px] uppercase tracking-widest text-[#c5a059]/70">{orders.length} total</span>
         </div>
 
         {orders.length === 0 ? (
-          <div className="text-center py-16 bg-[#1a1510] border border-[#c5a059]/20 rounded-xl shadow-lg">
-            <p className="text-[#fbf5e9]/40 font-body mb-4">No orders placed yet.</p>
+          <div className="text-center py-16 bg-[#15130f] border border-white/10 rounded-2xl shadow-lg">
+            <p className="text-[#fbf5e9]/40 font-body mb-4">No orders yet.</p>
             <button onClick={() => router.push('/shop')} className="text-[#c5a059] font-bold hover:underline uppercase tracking-widest text-xs">Browse Collection</button>
           </div>
         ) : (
@@ -281,24 +311,24 @@ export default function ProfilePage() {
             {orders.map((order) => {
               const statusStyle = getStatusStyle(order.status);
               return (
-                <div key={order.id} className="bg-[#1a1510] border border-[#c5a059]/20 rounded-xl shadow-lg hover:border-[#c5a059]/40 transition-all duration-300 overflow-hidden">
+                <div key={order.id} className="bg-[#15130f] border border-white/10 rounded-2xl shadow-[0_22px_60px_-40px_rgba(0,0,0,0.85)] hover:border-[#c5a059]/40 transition-all duration-300 overflow-hidden">
                   
                   {/* Order Header */}
-                  <div className="bg-[#0f0505]/50 p-4 flex justify-between items-center border-b border-[#c5a059]/10">
+                  <div className="bg-black/40 p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b border-white/10">
                     <div>
                       <span className="text-[#c5a059] font-bold uppercase tracking-widest text-xs block mb-1">Order #{order.id}</span>
                       <span className="text-[10px] text-[#fbf5e9]/40 font-mono">
-                        {new Date(order.created_at).toLocaleDateString()}
+                        {new Date(order.created_at).toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" })}
                       </span>
                     </div>
-                    <div className={`flex items-center gap-2 px-3 py-1 rounded text-[10px] font-bold uppercase tracking-wide border ${statusStyle.color}`}>
-                      {statusStyle.icon} {order.status}
+                    <div className={`flex items-center gap-2 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide border ${statusStyle.color}`}>
+                      {statusStyle.icon} {order.status.replace('_', ' ')}
                     </div>
                   </div>
 
                   <div className="p-5">
                     {/* Delivery & Contact Info */}
-                    <div className="flex flex-col md:flex-row justify-between gap-6 mb-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                        {/* Address */}
                        <div className="flex-1">
                           <p className="text-[10px] text-[#c5a059] uppercase tracking-widest mb-2 flex items-center gap-1"><MapPin size={10}/> Delivery Address</p>
@@ -313,9 +343,9 @@ export default function ProfilePage() {
 
                        {/* Admin Message */}
                        {order.admin_remarks && (
-                          <div className="flex-1 bg-[#c5a059]/10 border-l-2 border-[#c5a059] p-3 rounded-r-md">
+                          <div className="flex-1 bg-white/5 border border-white/10 p-4 rounded-xl">
                             <p className="text-[10px] text-[#c5a059] uppercase tracking-widest font-bold mb-1 flex items-center gap-1">
-                              <MessageSquare size={10} /> Royal Decree
+                              <MessageSquare size={10} /> Note from support
                             </p>
                             <p className="text-[#fbf5e9] text-sm italic">"{order.admin_remarks}"</p>
                           </div>
@@ -323,21 +353,21 @@ export default function ProfilePage() {
                     </div>
 
                     {/* Item List */}
-                    <div className="border-t border-[#c5a059]/10 pt-4">
-                      <p className="text-[10px] text-[#c5a059] uppercase tracking-widest mb-3">Treasures Ordered</p>
+                    <div className="border-t border-white/10 pt-4">
+                      <p className="text-[10px] text-[#c5a059] uppercase tracking-widest mb-3">Items</p>
                       <div className="space-y-3">
                         {order.items && order.items.length > 0 ? (
                            order.items.map((item, idx) => (
-                             <div key={idx} className="flex items-center gap-4 bg-[#0f0505]/40 p-2 rounded border border-[#c5a059]/5">
-                                <div className="w-12 h-12 bg-black rounded border border-[#c5a059]/20 overflow-hidden shrink-0">
+                             <div key={idx} className="flex items-center gap-4 bg-black/30 p-3 rounded-xl border border-white/5">
+                                <div className="w-12 h-12 bg-black rounded-lg border border-white/10 overflow-hidden shrink-0">
                                    <img src={item.image_url} className="w-full h-full object-cover" alt={item.name} />
                                 </div>
-                                <div className="flex-1 flex justify-between items-center">
+                                <div className="flex-1 flex justify-between items-center gap-4">
                                    <div>
                                      <p className="text-sm text-[#fbf5e9] font-bold">{item.name}</p>
-                                     <p className="text-[10px] text-[#c5a059]">Qty: {item.quantity} × ₹{item.price}</p>
+                                     <p className="text-[10px] text-[#c5a059]">Qty: {item.quantity} | INR {item.price}</p>
                                    </div>
-                                   <p className="text-sm text-[#fbf5e9] font-bold">₹{item.price * item.quantity}</p>
+                                   <p className="text-sm text-[#fbf5e9] font-bold">INR {item.price * item.quantity}</p>
                                 </div>
                              </div>
                            ))
@@ -346,13 +376,15 @@ export default function ProfilePage() {
                     </div>
 
                     {/* Footer Total */}
-                    <div className="mt-4 pt-4 border-t border-[#c5a059]/20 flex justify-between items-center">
+                    <div className="mt-4 pt-4 border-t border-white/10 flex justify-between items-center">
                        {order.payment_screenshot_url ? (
                          <a href={order.payment_screenshot_url} target="_blank" className="text-xs text-blue-400 underline flex items-center gap-1">
                            <ExternalLink size={10} /> Payment Proof
                          </a>
-                       ) : <span className="text-xs text-red-500">No Proof</span>}
-                       <p className="text-lg text-[#c5a059] font-bold">Total: ₹{order.total_amount}</p>
+                       ) : <span className="text-xs text-red-500">No proof</span>}
+                       <p className="text-lg text-[#c5a059] font-bold flex items-center gap-1">
+                         <IndianRupee size={16} />{order.total_amount}
+                       </p>
                     </div>
 
                   </div>

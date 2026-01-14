@@ -93,7 +93,7 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 text-[11px] uppercase tracking-widest text-[#fbf5e9]/70 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <span className="hidden lg:inline">Free shipping over INR 1999</span>
-            <span className="hidden sm:inline">Easy returns within 7 days</span>
+            <span className="hidden sm:inline">Chat us on Whatsapp or Instagram</span>
           </div>
           <div className="flex items-center gap-4">
             <span className="flex items-center gap-1"><PhoneCall size={12} /> Support: 10am - 8pm</span>

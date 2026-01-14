@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Package, PlusCircle, LogOut, Loader2, Crown, Shirt, Camera, Shield } from "lucide-react";
+import { Package, PlusCircle, LogOut, Loader2, Crown, Shirt, Camera, Shield, Tag } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import { isAdminEmail } from "@/lib/admin";
@@ -138,6 +138,25 @@ export default function AdminDashboard() {
             </p>
             <div className="mt-8 inline-flex items-center gap-2 text-royal-gold text-xs font-bold uppercase tracking-widest border-b border-royal-gold pb-1 group-hover:gap-4 transition-all">
               Open Registry <PlusCircle size={14} />
+            </div>
+          </div>
+        </Link>
+
+        {/* BUTTON 5: Deal of the Day */}
+        <Link href="/admin/deal-of-day" className="group relative bg-[#1a1510] border border-royal-gold/30 p-10 rounded-xl hover:border-royal-gold hover:bg-[#251d16] transition-all duration-500 shadow-lg hover:shadow-royal-gold/20 text-center overflow-hidden">
+          {/* Hover Effect Background */}
+          <div className="absolute inset-0 bg-gradient-to-br from-royal-gold/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"/>
+          
+          <div className="relative z-10">
+            <div className="bg-royal-gold/10 w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-royal-gold group-hover:text-[#1a1510] transition-colors duration-500 border border-royal-gold/20">
+              <Tag size={40} className="text-royal-gold group-hover:text-[#1a1510]" />
+            </div>
+            <h2 className="text-2xl font-heading font-bold text-white mb-3 group-hover:text-royal-gold transition-colors">Deal of the Day</h2>
+            <p className="text-gray-400 font-body text-sm leading-relaxed max-w-xs mx-auto">
+              Select a featured product to highlight on the home page.
+            </p>
+            <div className="mt-8 inline-flex items-center gap-2 text-royal-gold text-xs font-bold uppercase tracking-widest border-b border-royal-gold pb-1 group-hover:gap-4 transition-all">
+              Curate the Deal <PlusCircle size={14} />
             </div>
           </div>
         </Link>
