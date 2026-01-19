@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import { useCart } from "@/context/CartContext";
@@ -26,7 +26,7 @@ type Review = {
 };
 
 
-export default function ShopPage() {
+function ShopPageContent() {
   const searchParams = useSearchParams();
 
   const [products, setProducts] = useState<Product[]>([]);
@@ -461,5 +461,20 @@ export default function ShopPage() {
       )}
 
     </div>
+  );
+}
+
+export default function ShopPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex flex-col items-center justify-center bg-[#0f0505] text-[#c5a059]">
+          <Loader2 className="animate-spin w-12 h-12 mb-4" />
+          <p className="font-heading tracking-[0.3em] uppercase text-sm">Opening ...</p>
+        </div>
+      }
+    >
+      <ShopPageContent />
+    </Suspense>
   );
 }
