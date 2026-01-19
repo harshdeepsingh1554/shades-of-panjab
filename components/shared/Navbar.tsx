@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ShoppingBag, User, Menu, Camera, X, Search, PhoneCall, MapPin } from "lucide-react";
 import { useCart } from "@/context/CartContext";
-import { useState, useEffect, type FormEvent } from "react";
+import { Suspense, useEffect, useState, type FormEvent } from "react";
 import { supabase } from "@/lib/supabase";
 import { isAdminEmail } from "@/lib/admin";
 
@@ -16,7 +16,7 @@ const quickLinks = [
   { label: "Custom Order", href: "/custom-request" },
 ];
 
-export default function Navbar() {
+function NavbarContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { cart } = useCart();
@@ -226,5 +226,13 @@ export default function Navbar() {
         </div>
       )}
     </nav>
+  );
+}
+
+export default function Navbar() {
+  return (
+    <Suspense fallback={null}>
+      <NavbarContent />
+    </Suspense>
   );
 }
