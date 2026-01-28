@@ -119,10 +119,10 @@ export default function Home() {
 
         <div className="relative z-10 text-center px-4 sm:px-6 max-w-4xl mx-auto flex flex-col items-center justify-center h-full pt-16">
           <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-heading font-bold text-[#fbf5e9] mb-6 tracking-wide drop-shadow-2xl">
-            Shades of Punjab
+             
           </h1>
           <p className="text-[#fbf5e9]/80 max-w-2xl mb-8 text-sm sm:text-base md:text-lg">
-            Premium Punjabi attire inspired by royal heritage. Crafted for weddings, festivals, and timeless celebrations.
+             
           </p>
 
           <div className="flex flex-col sm:flex-row items-center gap-4">
