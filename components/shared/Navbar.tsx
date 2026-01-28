@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { ShoppingBag, User, Menu, Camera, X, Search, PhoneCall, MapPin } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { Suspense, useEffect, useState, type FormEvent } from "react";
@@ -18,7 +18,7 @@ const quickLinks = [
 
 function NavbarContent() {
   const router = useRouter();
-  const searchParams = useSearchParams();
+  const pathname = usePathname();
   const { cart } = useCart();
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -58,15 +58,18 @@ function NavbarContent() {
   }, []);
 
   useEffect(() => {
-    const currentSearch = searchParams.get("search") ?? "";
-    setSearchTerm(currentSearch);
-  }, [searchParams]);
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    setSearchTerm(params.get("search") ?? "");
+  }, [pathname]);
 
   const handleSearchSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const trimmed = searchTerm.trim();
     const params = new URLSearchParams();
-    const activeCategory = searchParams.get("category");
+    const activeCategory = typeof window === "undefined"
+      ? null
+      : new URLSearchParams(window.location.search).get("category");
 
     if (activeCategory) {
       params.set("category", activeCategory);
