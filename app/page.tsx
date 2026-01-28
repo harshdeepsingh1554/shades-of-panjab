@@ -119,14 +119,14 @@ export default function Home() {
 
         <div className="relative z-10 text-center px-4 sm:px-6 max-w-4xl mx-auto flex flex-col items-center justify-center h-full pt-16">
           <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-heading font-bold text-[#fbf5e9] mb-6 tracking-wide drop-shadow-2xl">
-             
+                                            
           </h1>
           <p className="text-[#fbf5e9]/80 max-w-2xl mb-8 text-sm sm:text-base md:text-lg">
-             
+                                              
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center gap-4">
-            <Link
+          <div className="mt-15 flex flex-col sm:flex-row items-center gap-4">
+            <Link 
               href="/shop"
               className="group relative inline-flex items-center justify-center gap-3 w-full sm:w-auto px-8 py-3 md:px-10 md:py-4 border-2 border-[#c5a059] text-[#c5a059] font-heading uppercase tracking-widest text-xs md:text-sm hover:bg-[#c5a059] hover:text-[#2a0a12] transition-all duration-300 bg-black/30 backdrop-blur-sm shadow-lg"
             >
@@ -141,7 +141,7 @@ export default function Home() {
             </Link>
           </div>
 
-          <div className="mt-8 sm:mt-10 flex flex-wrap justify-center gap-3 sm:gap-4 text-[10px] sm:text-[11px] uppercase tracking-widest text-[#fbf5e9]/70">
+          <div className="mt-4 sm:mt-1 flex flex-wrap justify-center gap-3 sm:gap-4 text-[10px] sm:text-[11px] uppercase tracking-widest text-[#fbf5e9]/70">
             <span className="px-4 py-2 border border-[#fbf5e9]/20 rounded-full w-full sm:w-auto text-center">2,000+ customers</span>
             <span className="px-4 py-2 border border-[#fbf5e9]/20 rounded-full w-full sm:w-auto text-center">Made in Punjab</span>
             <span className="px-4 py-2 border border-[#fbf5e9]/20 rounded-full w-full sm:w-auto text-center">Trusted by wedding stylists</span>
