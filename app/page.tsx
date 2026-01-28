@@ -113,15 +113,11 @@ export default function Home() {
       <section className="relative h-[70vh] sm:h-[75vh] md:h-[85vh] min-h-[460px] sm:min-h-[520px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute inset-0 bg-[url('https://xplbznfkpfxumynuoltl.supabase.co/storage/v1/object/public/banners/banner.png')] bg-cover bg-center" />
-          <div className="absolute inset-0 bg-black/60 md:bg-black/40" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#13060b] via-transparent to-black/80" />
+          <div className="absolute inset-0 bg-black/35 md:bg-black/20" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#13060b]/60 via-transparent to-black/40" />
         </div>
 
         <div className="relative z-10 text-center px-4 sm:px-6 max-w-4xl mx-auto flex flex-col items-center justify-center h-full pt-16">
-          <p className="text-[#c5a059] uppercase tracking-[0.35em] text-xs md:text-sm mb-4 animate-in fade-in slide-in-from-bottom-4 duration-1000">
-            Est. 2024 | Legacy of Punjab
-          </p>
-
           <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-heading font-bold text-[#fbf5e9] mb-6 tracking-wide drop-shadow-2xl">
             Shades of Punjab
           </h1>
