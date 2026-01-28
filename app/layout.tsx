@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Cinzel, Lato } from "next/font/google"; // Import regal fonts
 import "./globals.css";
 import Navbar from "@/components/shared/Navbar";
+import { Suspense } from "react";
 import { CartProvider } from "@/context/CartContext";
 
 // 1. Configure the Fonts
@@ -34,7 +35,9 @@ export default function RootLayout({
         <CartProvider>
           {/* We wrap the Navbar to ensure it sits on top of the texture */}
           <div className="relative min-h-screen bg-royal-pattern">
-             <Navbar /> 
+             <Suspense fallback={null}>
+               <Navbar /> 
+             </Suspense>
              <main className="min-h-screen">
                {children}
              </main>
